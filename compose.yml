@@ -3,8 +3,7 @@ services:
     container_name: aws-localstack
     image: localstack/localstack
     ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
-      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+      - "4566:4566"
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       - DEBUG=${DEBUG:-0}
@@ -24,4 +23,9 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./localstack-setup.sh:/etc/localstack/init/ready.d/script.sh
     healthcheck:
-      test: [ "CMD", "awslocal", "s3api", "wait", "bucket-exists", "--bucket", "localstack-s3" ]
+      test:
+        "
+          curl -X 'GET' \
+            'http://localhost.localstack.cloud:4566/_localstack/health' \
+            -H 'accept: application/json'
+        "
