@@ -1,7 +1,7 @@
 services:
   localstack:
     container_name: aws-localstack
-    image: localstack/localstack
+    image: localstack/localstack:latest
     ports:
       - "4566:4566"
     environment:
