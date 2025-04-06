@@ -1,0 +1,25 @@
+services:
+  localstack:
+    container_name: aws-localstack
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+      - AWS_DEFAULT_REGION=es-west-1
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=admin
+      - DEFAULT_REGION=es-west-1
+      - SERVICES=s3,dynamodb,sqs,apigateway,cloudformation,cloudwatch,ec2,iam,kinesis,kms,lambda,route53,secretsmanager,sns,ssm,stepfuncstions,sts
+      - DEBUG=${DEBUG-}
+      - DATA_DIR=${DATA_DIR-}
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DISABLE_CORS_CHECKS=1
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./localstack-setup.sh:/etc/localstack/init/ready.d/script.sh
