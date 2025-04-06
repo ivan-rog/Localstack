@@ -8,10 +8,10 @@ services:
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       - DEBUG=${DEBUG:-0}
-      - AWS_DEFAULT_REGION=es-west-1
+      - AWS_DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=admin
       - AWS_SECRET_ACCESS_KEY=admin
-      - DEFAULT_REGION=es-west-1
+      - DEFAULT_REGION=us-east-1
       - SERVICES=s3,dynamodb,sqs,apigateway,cloudformation,cloudwatch,ec2,iam,kinesis,kms,lambda,route53,secretsmanager,sns,ssm,stepfuncstions,sts
       - DEBUG=${DEBUG-}
       - DATA_DIR=${DATA_DIR-}
