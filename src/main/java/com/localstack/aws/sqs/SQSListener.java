@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SQSListener {
 
-    @SqsListener("localstack-queue")
+    @SqsListener("${app.queue-name}")
     public void receiveMessage(String message) {
         log.info("Received message: {}", message);
     }

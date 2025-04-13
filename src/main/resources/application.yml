@@ -13,3 +13,8 @@ spring:
         enabled: true
         endpoint: http://localhost:4566
         region: ${AWS_DEFAULT_REGION}
+        listener:
+          poll-timeout: 2000
+
+app:
+  queue-name: localstack-queue

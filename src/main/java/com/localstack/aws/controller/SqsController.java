@@ -15,7 +15,6 @@ public class SqsController {
 
     @PostMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody String message) {
-        sqsService.sendMessage("localstack-queue", message);
-        return ResponseEntity.ok("Message sent");
+        return ResponseEntity.ok("Message sent: " + sqsService.sendMessage("localstack-queue", message));
     }
 }

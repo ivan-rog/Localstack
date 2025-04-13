@@ -10,8 +10,8 @@ public class SqsService {
 
     private final SqsTemplate sqsTemplate;
 
-    public void sendMessage(String queueName, String message) {
-        sqsTemplate.send(queueName, message);
+    public String sendMessage(String queueName, String message) {
+        return sqsTemplate.send(queueName, message).messageId().toString();
     }
 
 }
