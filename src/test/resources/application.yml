@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: localstack
+  docker:
+    compose:
+      enabled: true
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID}
+        secret-key: ${AWS_SECRET_ACCESS_KEY}
+      sqs:
+        enabled: true
+        endpoint: http://localhost:4566
+        region: ${AWS_DEFAULT_REGION}
+
+app:
+  queue-name: localstack-queue
