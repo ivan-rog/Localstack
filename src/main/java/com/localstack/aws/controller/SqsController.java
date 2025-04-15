@@ -1,6 +1,7 @@
 package com.localstack.aws.controller;
 
 import com.localstack.aws.business.SqsService;
+import com.localstack.aws.entitys.request.SqsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ public class SqsController {
     private final SqsService sqsService;
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody String message) {
-        return ResponseEntity.ok("Message sent: " + sqsService.sendMessage("localstack-queue", message));
+    public ResponseEntity<String> sendMessage(@RequestBody SqsRequest sqsRequest) {
+        return ResponseEntity.ok("Message sent: " + sqsService.sendMessage(sqsRequest.queueName(), sqsRequest.message()));
     }
 }

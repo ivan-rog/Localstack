@@ -16,5 +16,8 @@ spring:
         listener:
           poll-timeout: 2000
 
-app:
-  queue-name: localstack-queue
+queue:
+  localstack:
+    name: localstack-queue
+  prueba:
+    name: prueba-queue
