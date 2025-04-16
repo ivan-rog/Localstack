@@ -1,5 +1,7 @@
 package com.localstack.aws.business;
 
+import com.localstack.aws.entitys.request.SqsRequest;
+import com.localstack.aws.entitys.sqs.NotificationType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ import java.io.IOException;
 import java.time.Duration;
 
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.testcontainers.containers.localstack.LocalStackContainer.Service.SQS;
 
 @SpringBootTest
@@ -28,11 +30,13 @@ class SqsServiceTest {
     static LocalStackContainer localStack = new LocalStackContainer(DockerImageName.parse("localstack/localstack:latest"))
             .withServices(LocalStackContainer.Service.SQS);
 
-    static final String QUEUE_NAME = "test-queue";
+    static final String LOCALSTACK_QUEUE_NAME = "localstack-queue";
+    static final String PRUEBA_QUEUE_NAME = "prueba-queue";
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("app.queue-name", () -> QUEUE_NAME);
+        registry.add("queue.localstack.name", () -> LOCALSTACK_QUEUE_NAME);
+        registry.add("queue.prueba.name", () -> PRUEBA_QUEUE_NAME);
         registry.add(
                 "spring.cloud.aws.region.static",
                 () -> localStack.getRegion()
@@ -58,22 +62,30 @@ class SqsServiceTest {
                 "sqs",
                 "create-queue",
                 "--queue-name",
-                QUEUE_NAME
+                LOCALSTACK_QUEUE_NAME
+        );
+        localStack.execInContainer(
+                "awslocal",
+                "sqs",
+                "create-queue",
+                "--queue-name",
+                PRUEBA_QUEUE_NAME
         );
     }
 
     @Autowired
-    private SqsService sqsService;
+    private SqsProducer sqsService;
 
     @Test
-    void testSendMessage() throws IOException {
+    void testSendMessage() {
+        var sqsRequest = new SqsRequest(LOCALSTACK_QUEUE_NAME, NotificationType.SUCCESS, "Hello World");
         await()
                 .pollInterval(Duration.ofSeconds(2))
                 .atMost(Duration.ofSeconds(10))
                 .ignoreExceptions()
                 .untilAsserted(
                         () -> {
-                            var id = sqsService.sendMessage(QUEUE_NAME, "Hello World");
+                            var id = sqsService.sendMessage(sqsRequest);
                             assertNotNull(id);
                         }
                 );
