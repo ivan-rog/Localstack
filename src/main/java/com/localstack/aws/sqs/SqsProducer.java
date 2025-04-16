@@ -1,4 +1,4 @@
-package com.localstack.aws.business;
+package com.localstack.aws.sqs;
 
 import com.localstack.aws.entitys.request.SqsRequest;
 import com.localstack.aws.entitys.sqs.NotificationSQS;

@@ -1,6 +1,6 @@
 package com.localstack.aws.controller;
 
-import com.localstack.aws.business.SqsProducer;
+import com.localstack.aws.sqs.SqsProducer;
 import com.localstack.aws.entitys.request.SqsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

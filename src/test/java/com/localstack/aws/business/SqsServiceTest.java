@@ -2,6 +2,7 @@ package com.localstack.aws.business;
 
 import com.localstack.aws.entitys.request.SqsRequest;
 import com.localstack.aws.entitys.sqs.NotificationType;
+import com.localstack.aws.sqs.SqsProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
