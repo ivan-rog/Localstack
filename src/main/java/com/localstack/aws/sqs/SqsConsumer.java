@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SqsConsumer {
 
-    @SqsListener(queueNames = {"${queue.localstack.name}", "${queue.prueba.name}"}, acknowledgementMode = "MANUAL")
+    @SqsListener(queueNames = {"${queue.localstack.name}", "${queue.prueba.name}"}, factory = "myFactory")
     public void receiveMessage(Message<NotificationSQS> message, Acknowledgement acknowledgement) {
         log.info("Received message: {}", message.getPayload());
         acknowledgement.acknowledge();
